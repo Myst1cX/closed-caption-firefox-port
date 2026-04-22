@@ -10,5 +10,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build out project
-        run: yarn build
+      - name: Build Chrome
+        run: yarn build:chrome
+
+      - name: Build Firefox
+        run: yarn build:firefox
