@@ -29,9 +29,10 @@ function zipDir(sourceDir, outputZip) {
 }
 
 const args = process.argv.slice(2);
-const buildChrome = args.includes("--chrome") || args.includes("--all") || args.length === 0;
-const buildFirefox = args.includes("--firefox") || args.includes("--all") || args.length === 0;
 const packageOnly = args.includes("--package");
+const buildChrome = !packageOnly && (args.includes("--chrome") || args.includes("--all") || args.length === 0);
+const buildFirefox = !packageOnly && (args.includes("--firefox") || args.includes("--all") || args.length === 0);
+const packageBuilds = packageOnly || buildChrome || buildFirefox;
 
 if (buildChrome) {
   console.log("\n=== Building Chrome ===");
@@ -43,18 +44,21 @@ if (buildFirefox) {
   run("webpack --mode=production", { BROWSER: "firefox", ENV: "production" });
 }
 
-if (packageOnly || buildChrome || buildFirefox) {
+if (packageBuilds) {
   console.log("\n=== Packaging builds ===");
   fs.mkdirSync(buildsDir, { recursive: true });
 
-  if (buildChrome && fs.existsSync(path.join(distDir, "chrome"))) {
+  const packageChrome = buildChrome || packageOnly;
+  const packageFirefox = buildFirefox || packageOnly;
+
+  if (packageChrome && fs.existsSync(path.join(distDir, "chrome"))) {
     zipDir(
       path.join(distDir, "chrome"),
       path.join(buildsDir, `closed-caption-chrome-v${version}.zip`)
     );
   }
 
-  if (buildFirefox && fs.existsSync(path.join(distDir, "firefox"))) {
+  if (packageFirefox && fs.existsSync(path.join(distDir, "firefox"))) {
     zipDir(
       path.join(distDir, "firefox"),
       path.join(buildsDir, `closed-caption-firefox-v${version}.zip`)

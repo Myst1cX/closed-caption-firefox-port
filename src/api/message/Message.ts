@@ -30,7 +30,7 @@ const Message = {
     payload: ChromeAPIPayload,
     callback: (response: ChromeAPIResponse) => void
   ) {
-    (BrowserAPI.runtime.sendMessage as typeof chrome.runtime.sendMessage)<ChromeAPIRequest, ChromeAPIResponse>(
+    BrowserAPI.runtime.sendMessage<ChromeAPIRequest, ChromeAPIResponse>(
       { message, payload },
       callback
     );

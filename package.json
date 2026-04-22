@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack --mode=development --watch",
-    "build": "BROWSER=chrome ENV=production webpack --mode=production",
-    "build:chrome": "BROWSER=chrome ENV=production webpack --mode=production",
-    "build:firefox": "BROWSER=firefox ENV=production webpack --mode=production",
+    "build": "node scripts/build.js --chrome",
+    "build:chrome": "node scripts/build.js --chrome",
+    "build:firefox": "node scripts/build.js --firefox",
     "build:all": "node scripts/build.js --all",
     "package:all": "node scripts/build.js --all",
     "test": "jest --config ./jest.config.js --env=jsdom"
