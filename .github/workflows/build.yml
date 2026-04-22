@@ -1,5 +1,7 @@
 name: "build CI"
-on: pull_request
+on:
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -10,8 +12,11 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build Chrome
-        run: yarn build:chrome
+      - name: Build Chrome & Firefox
+        run: yarn build:all
 
-      - name: Build Firefox
-        run: yarn build:firefox
+      - name: Upload extension zips
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-zips
+          path: dist/builds/*.zip
