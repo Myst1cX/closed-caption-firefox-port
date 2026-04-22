@@ -54,13 +54,19 @@ class PopupController {
         this.updateFontSlider(this.fontSliderCallback)
       );
 
-    this.textColorPickerView.getElement().addEventListener(
-      "input",
-      throttle(
-        (event) => this.updateTextColor(event, this.textColorCallback),
-        300
-      )
-    );
+    const textColorHandler = (event: Event) =>
+      this.updateTextColor(event, this.textColorCallback);
+
+    this.textColorPickerView
+      .getElement()
+      .addEventListener(
+        "input",
+        throttle(textColorHandler, 300)
+      );
+
+    this.textColorPickerView
+      .getElement()
+      .addEventListener("change", textColorHandler);
 
     this.translatingSwitchView
       .getElement()
