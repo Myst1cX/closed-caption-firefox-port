@@ -1,4 +1,5 @@
 import Message from "./Message";
+import BrowserAPI from "../browser-api";
 
 import {
   TEXT_COLOR_MESSAGE,
@@ -31,7 +32,7 @@ const sendMessageToBackgroundTranslatingText = async (
 const sendMessageToContentIsActiveTranslation = async (
   isActiveTranslation: boolean
 ) => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await BrowserAPI.tabs.query({ active: true, currentWindow: true });
   const tabId = tab.id;
 
   if (!tabId) return;
@@ -44,7 +45,7 @@ const sendMessageToContentIsActiveTranslation = async (
 };
 
 const sendMessageToContentRangeValue = async (rangeValue: number) => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await BrowserAPI.tabs.query({ active: true, currentWindow: true });
   const tabId = tab.id;
 
   if (!tabId) return;
@@ -57,7 +58,7 @@ const sendMessageToContentRangeValue = async (rangeValue: number) => {
 };
 
 const sendMessageToContentChangedLanguage = async (language: LanguageCode) => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await BrowserAPI.tabs.query({ active: true, currentWindow: true });
   const tabId = tab.id;
 
   if (!tabId) return;
@@ -70,7 +71,7 @@ const sendMessageToContentChangedLanguage = async (language: LanguageCode) => {
 };
 
 const sendMessageToContentTextColor = async (textColor: string) => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await BrowserAPI.tabs.query({ active: true, currentWindow: true });
   const tabId = tab.id;
 
   if (!tabId) return;

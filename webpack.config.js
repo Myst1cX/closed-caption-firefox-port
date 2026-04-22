@@ -3,6 +3,13 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const browser = process.env.BROWSER || "chrome";
+const manifestFile =
+  browser === "firefox"
+    ? "./public/manifest.firefox.json"
+    : "./public/manifest.json";
+const outputPath = path.join(__dirname, "dist", browser);
+
 module.exports = {
   mode: process.env.ENV || "development",
   entry: {
@@ -11,7 +18,7 @@ module.exports = {
     background: path.resolve(__dirname, "src", "background.ts"),
   },
   output: {
-    path: path.join(__dirname, "dist"),
+    path: outputPath,
     filename: "[name].js",
   },
   resolve: {
@@ -58,7 +65,7 @@ module.exports = {
           to: "./assets",
           globOptions: { ignore: ["**/readme/**"] },
         },
-        { from: "./public/manifest.json", to: "./manifest.json" },
+        { from: manifestFile, to: "./manifest.json" },
         { from: "./public/_locales", to: "./_locales" },
         { from: "./public/popup.css", to: "./popup.css" },
       ],

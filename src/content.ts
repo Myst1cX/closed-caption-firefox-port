@@ -1,3 +1,4 @@
+import BrowserAPI from "./api/browser-api";
 import View from "./view/subtitle";
 import Model from "./model/subtitle";
 import Controller from "./controller/subtitle";
@@ -136,7 +137,7 @@ const initialSetRenderClosedCaption = async () => {
   changeTranslatedTargetLanguage(languageCode);
 };
 
-chrome.runtime.onMessage.addListener(
+BrowserAPI.runtime.onMessage.addListener(
   (request: { message: string; data: unknown }) => {
     if (request.message === TRANSLATE_CALL_MESSAGE) {
       request.data

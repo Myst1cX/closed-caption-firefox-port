@@ -1,3 +1,4 @@
+import BrowserAPI from "../browser-api";
 import type { LanguageCode } from "../../common/language.types";
 
 type ChromeAPIPayload = {
@@ -21,7 +22,7 @@ const Message = {
     message: string,
     data?: unknown
   ) {
-    chrome.tabs.sendMessage(tabId, { message, data });
+    BrowserAPI.tabs.sendMessage(tabId, { message, data });
   },
 
   async sendMessageToBackground(
@@ -29,7 +30,7 @@ const Message = {
     payload: ChromeAPIPayload,
     callback: (response: ChromeAPIResponse) => void
   ) {
-    chrome.runtime.sendMessage<ChromeAPIRequest, ChromeAPIResponse>(
+    (BrowserAPI.runtime.sendMessage as typeof chrome.runtime.sendMessage)<ChromeAPIRequest, ChromeAPIResponse>(
       { message, payload },
       callback
     );
