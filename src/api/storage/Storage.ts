@@ -1,12 +1,14 @@
+import BrowserAPI from "../browser-api";
+
 const Storage = {
   async getStorageValue<R>(key: string): Promise<{ [key: string]: R }> {
-    const storageValue = await chrome.storage.sync.get(key);
+    const storageValue = await BrowserAPI.storage.sync.get(key);
 
     return storageValue;
   },
 
   async setStorageValue<T>(key: string, value: T) {
-    await chrome.storage.sync.set({ [key]: value });
+    await BrowserAPI.storage.sync.set({ [key]: value });
   },
 };
 

@@ -1,8 +1,10 @@
+import BrowserAPI from "./api/browser-api";
+
 const replaceNewLineSequenceToSpace = (text: string) => {
   return text.replace(/\r?\n/g, " ");
 };
 
-chrome.runtime.onMessage.addListener(({ message, payload }, _, response) => {
+BrowserAPI.runtime.onMessage.addListener(({ message, payload }, _, response) => {
   if (message === "translate") {
     const translateTargetText = encodeURIComponent(
       replaceNewLineSequenceToSpace(payload.translateTargetText)
@@ -27,10 +29,10 @@ chrome.runtime.onMessage.addListener(({ message, payload }, _, response) => {
   return true;
 });
 
-chrome.commands.onCommand.addListener(async function (command) {
+BrowserAPI.commands.onCommand.addListener(async function (command) {
   switch (command) {
     case "active-translate":
-      chrome.runtime.sendMessage({ message: "toggle-translate" });
+      BrowserAPI.runtime.sendMessage({ message: "toggle-translate" });
       break;
     default:
       console.log(`Command ${command} not found`);
